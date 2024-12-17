@@ -4,7 +4,8 @@
 
 <template>
 
-  <h1>Welcome to New Year!</h1>
+  <main>
+    <RouterView />
+  </main>
 
 </template>
-
