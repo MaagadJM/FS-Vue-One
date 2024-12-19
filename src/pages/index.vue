@@ -1,5 +1,16 @@
 <script setup lang="ts">
 
+const getProjects = async () => {
+    const { data, error } = await supabase.from('projects').select()
+
+    if (error) console.log(error)
+
+    console.log('Projects : ', data)
+}
+
+await getProjects()
+
+
 </script>
 
 <template>
