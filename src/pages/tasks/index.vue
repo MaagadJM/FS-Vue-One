@@ -5,6 +5,7 @@ import { h, ref } from 'vue'
 import type { Tables } from '../../../database.types';
 import type { ColumnDef } from '@tanstack/vue-table';
 import DataTable from '@/components/ui/data-table/DataTable.vue';
+import { RouterLink } from 'vue-router';
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
@@ -23,10 +24,6 @@ const tasks = ref<Tables<'tasks'>[] | null>(null)
 
 
 
-
-
-
-
 const columns: ColumnDef<Tables<'tasks'>>[] = [
     {
         accessorKey: 'name',
@@ -34,7 +31,8 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
         cell: ({ row }) => {
 
 
-            return h('div', { class: 'text-left font-medium' }, row.getValue('name'))
+            return h(RouterLink, { to: `/tasks/${row.original.id}`, class: 'text-left font-medium hover:bg-muted block' },
+                () => row.getValue('name'))
         },
     },
     {
@@ -69,14 +67,14 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
         header: () => h('div', { class: 'text-left' }, 'Collaborators'),
         cell: ({ row }) => {
             return h(
-                'div', 
-                { class: 'text-left font-medium' }, 
+                'div',
+                { class: 'text-left font-medium' },
                 // below this will convert it to an array of numbers, but still a string. so its not an array
                 JSON.stringify(row.getValue('collaborators'))
             )
         },
     },
-    
+
 ]
 
 

@@ -62,3 +62,17 @@ const table = useVueTable({
     </Table>
   </div>
 </template>
+
+<!-- scoped means that the css here are going to applied only to the elements
+     that are inside this component -->
+<style scoped>
+td {
+  @apply p-0;
+}
+
+/* so table data, any element that goes inside it */
+td > * {
+  @apply p-4;
+}
+
+</style>
