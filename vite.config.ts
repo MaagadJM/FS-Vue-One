@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import VueRouter from 'unplugin-vue-router/vite'
 
 import AutoImport from 'unplugin-auto-import/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
@@ -26,7 +27,7 @@ export default defineConfig({
       imports: [
         // presets
         'vue',
-        'vue-router',
+        VueRouterAutoImports,
       ],
 
       // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
