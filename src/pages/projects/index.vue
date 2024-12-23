@@ -9,18 +9,15 @@ import { RouterLink } from 'vue-router';
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
-    ; (async () => {
-        const { data, error } = await supabase.from('projects').select()
+const getProjects = async () => {
+    const { data, error } = await supabase.from('projects').select()
 
-        if (error) console.log(error)
+    if (error) console.log(error)
 
-
-        projects.value = data
-        console.log('projects: ', projects.value)
-
-
-        // return data
-    })()
+    projects.value = data
+    console.log('projects: ', projects.value)
+}
+await getProjects()
 
 // the "[]" here <Tables<'projects'>>"[]" tell the typescript that it should be an array
 const columns: ColumnDef<Tables<'projects'>>[] = [
@@ -28,8 +25,8 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
         accessorKey: 'name',
         header: () => h('div', { class: 'text-left' }, 'Name'),
         cell: ({ row }) => {
-            return h(RouterLink, { to: `/projects/${row.original.slug}`, class: 'text-left font-medium hover:bg-muted block' }, 
-            () => row.getValue('name'))
+            return h(RouterLink, { to: `/projects/${row.original.slug}`, class: 'text-left font-medium hover:bg-muted block' },
+                () => row.getValue('name'))
         }
     },
     {

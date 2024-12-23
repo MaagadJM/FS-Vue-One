@@ -8,18 +8,19 @@ import { RouterLink } from 'vue-router';
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
-    ; (async () => {
-        const { data, error } = await supabase.from('tasks').select()
+const getTasks = async () => {
+    const { data, error } = await supabase.from('tasks').select()
 
-        if (error) console.log(error)
-
-
-        tasks.value = data
-        console.log('tasks: ', tasks.value)
+    if (error) console.log(error)
 
 
-        // return data
-    })()
+    tasks.value = data
+    console.log('tasks: ', tasks.value)
+
+
+    // return data
+}
+await getTasks()
 
 
 
