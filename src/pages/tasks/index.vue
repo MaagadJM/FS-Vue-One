@@ -1,23 +1,15 @@
 <script setup lang="ts">
 
-import { supabase } from '@/lib/supabaseClient'
-// import { h, ref } from 'vue'
-// import type { Tables } from '../../../database.types';
+import { RouterLink } from 'vue-router';
+
+import { tasksWithProjectsQuery } from '@/utils/supaQueries';
+import type { TasksWithProjects } from '@/utils/supaQueries';
+
 import type { ColumnDef } from '@tanstack/vue-table';
 
-import { RouterLink } from 'vue-router';
-import type { QueryData } from '@supabase/supabase-js';
 
 usePageStore().pageData.title = 'My Tasks'
 
-
-const tasksWithProjectsQuery = supabase.from('tasks').select(`
-        *,
-        projects (
-            id, name, slug
-        )
-    `)
-type TasksWithProjects = QueryData<typeof tasksWithProjectsQuery>
 
 
 const tasks = ref<TasksWithProjects | null>(null)
@@ -72,7 +64,7 @@ const columns: ColumnDef<TasksWithProjects[0]>[] = [
 
 
             return row.original.projects ? h(RouterLink, { to: `/projects/${row.original.projects.slug}`, class: 'text-left font-medium hover:bg-muted block' },
-                () => row.original.projects?.name ) : ''
+                () => row.original.projects?.name) : ''
         },
     },
     {

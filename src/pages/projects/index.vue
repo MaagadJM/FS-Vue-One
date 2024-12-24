@@ -1,18 +1,19 @@
 <script setup lang="ts">
 
-import { supabase } from '@/lib/supabaseClient'
+
 // import { h, ref } from 'vue'
 import type { Tables } from '../../../database.types';
 import type { ColumnDef } from '@tanstack/vue-table';
 
 import { RouterLink } from 'vue-router';
+import { projectsQuery, type Projects } from '@/utils/supaQueries';
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Tables<'projects'>[] | null>(null)
+const projects = ref<Projects | null>(null)
 
 const getProjects = async () => {
-    const { data, error } = await supabase.from('projects').select()
+    const { data, error } = await projectsQuery
 
     if (error) console.log(error)
 
@@ -21,8 +22,7 @@ const getProjects = async () => {
 }
 await getProjects()
 
-// the "[]" here <Tables<'projects'>>"[]" tell the typescript that it should be an array
-const columns: ColumnDef<Tables<'projects'>>[] = [
+const columns: ColumnDef<Projects[0]>[] = [
     {
         accessorKey: 'name',
         header: () => h('div', { class: 'text-left' }, 'Name'),
